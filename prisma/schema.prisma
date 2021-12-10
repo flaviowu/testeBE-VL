@@ -25,10 +25,9 @@ model Flight {
   flightNumber    Int
   departure       String
   destination     String
-  eta             DateTime
-  etd             DateTime
-  price           Float
-  
+  eta             DateTime    //estimated time of arrival
+  etd             DateTime    //estimated time of departure
+
   airline         Airline    @relation(fields: [airlineId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   airlineId       Int
   
@@ -41,6 +40,7 @@ model Seat {
   createdAt       DateTime  @default(now())
   number          Int
   available       Boolean   @default(true)
+  price           Float
 
   flight          Flight    @relation(fields: [flightId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   flightId        Int
