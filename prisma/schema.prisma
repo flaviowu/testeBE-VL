@@ -11,16 +11,15 @@ datasource db {
 }
 
 model Airline {
-  id              Int           @unique @default(autoincrement())
+  id              Int           @id @default(autoincrement())
   createdAt       DateTime      @default(now())
   companyName     String
   iataCode        String
   flights         Flight[]
-
 }
 
 model Flight {
-  id              Int           @unique @default(autoincrement())
+  id              Int           @id @default(autoincrement())
   createdAt       DateTime      @default(now())
   flightNumber    Int
   departure       String
@@ -34,15 +33,30 @@ model Flight {
   
   seats           Seat[]
   availableSeats  Int
+
+  passengers    Passenger[]
 }
 
 model Seat {
-  id              Int       @unique @default(autoincrement())
-  createdAt       DateTime  @default(now())
+  id              Int         @id @default(autoincrement())
+  createdAt       DateTime    @default(now())
   number          Int
-  available       Boolean   @default(true)
+  available       Boolean     @default(true)
 
 
-  flight          Flight    @relation(fields: [flightId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  flight          Flight      @relation(fields: [flightId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   flightId        Int
+}
+
+model Passenger {
+  id               Int        @id @default(autoincrement())
+  createdAt        DateTime   @default(now())
+  name             String
+  birthday         DateTime
+  nationality      String
+  idNumber         String?    @unique
+  cpf              String?    @unique
+  passport         String?    @unique
+
+  flights          Flight[]
 }
