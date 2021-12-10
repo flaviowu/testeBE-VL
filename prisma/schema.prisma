@@ -31,9 +31,9 @@ model Flight {
   
   airline         Airline    @relation(fields: [airlineId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   airlineId       Int
-
+  
   seats           Seat[]
-
+  availableSeats  Int
 }
 
 model Seat {
