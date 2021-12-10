@@ -9,3 +9,39 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Airline {
+  id              Int           @unique @default(autoincrement())
+  createdAt       DateTime      @default(now())
+  name            String
+  iataCode        String
+  flights         Flight[]
+
+}
+
+model Flight {
+  id              Int           @unique @default(autoincrement())
+  createdAt       DateTime      @default(now())
+  flightNumber    Int
+  departure       String
+  destination     String
+  eta             DateTime
+  etd             DateTime
+  price           Float
+  
+  airline         Airline    @relation(fields: [airlineId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  airlineId       Int
+
+  seats           Seat[]
+
+}
+
+model Seat {
+  id              Int       @unique @default(autoincrement())
+  createdAt       DateTime  @default(now())
+  number          Int
+  available       Boolean   @default(true)
+
+  flight          Flight    @relation(fields: [flightId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  flightId        Int
+}
