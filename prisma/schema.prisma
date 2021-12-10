@@ -13,7 +13,7 @@ datasource db {
 model Airline {
   id              Int           @unique @default(autoincrement())
   createdAt       DateTime      @default(now())
-  name            String
+  companyName     String
   iataCode        String
   flights         Flight[]
 
@@ -27,6 +27,7 @@ model Flight {
   destination     String
   eta             DateTime    //estimated time of arrival
   etd             DateTime    //estimated time of departure
+  price           Float
 
   airline         Airline    @relation(fields: [airlineId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   airlineId       Int
@@ -40,7 +41,7 @@ model Seat {
   createdAt       DateTime  @default(now())
   number          Int
   available       Boolean   @default(true)
-  price           Float
+
 
   flight          Flight    @relation(fields: [flightId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   flightId        Int
