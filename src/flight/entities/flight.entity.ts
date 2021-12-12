@@ -13,5 +13,5 @@ export class Flight {
   airlineId: number;
   availableSeats: number;
   Seats: Seat[];
-  Passengers: Passenger[];
+  Passengers?: Passenger[];
 }
