@@ -46,6 +46,9 @@ model Seat {
 
   flight          Flight      @relation(fields: [flightId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   flightId        Int
+
+  passenger       Passenger   @relation(fields: [passengerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  passengerId     Int
 }
 
 model Passenger {
@@ -59,4 +62,5 @@ model Passenger {
   passport         String?    @unique
 
   flights          Flight[]
+  seats            Seat[]
 }
