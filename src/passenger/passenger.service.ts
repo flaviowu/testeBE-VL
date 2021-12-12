@@ -1,26 +1,36 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
+import { Passenger } from './entities/passenger.entity';
 import { CreatePassengerDto } from './dto/create-passenger.dto';
 import { UpdatePassengerDto } from './dto/update-passenger.dto';
 
 @Injectable()
 export class PassengerService {
-  create(createPassengerDto: CreatePassengerDto) {
-    return 'This action adds a new passenger';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(dto: CreatePassengerDto): Promise<Passenger> {
+    const data: Prisma.PassengerUncheckedCreateInput = {
+      ...dto,
+    };
+    const createPassenger = await this.prisma.passenger.create({ data });
+    return { ...createPassenger };
   }
 
   findAll() {
-    return `This action returns all passenger`;
+    return this.prisma.passenger.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} passenger`;
+    return this.prisma.passenger.findUnique({ where: { id } });
   }
 
-  update(id: number, updatePassengerDto: UpdatePassengerDto) {
-    return `This action updates a #${id} passenger`;
+  update(id: number, dto: UpdatePassengerDto) {
+    const data: Prisma.PassengerUncheckedUpdateInput = { ...dto };
+    return this.prisma.passenger.update({ where: { id }, data });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} passenger`;
+    return this.prisma.passenger.delete({ where: { id } });
   }
 }
