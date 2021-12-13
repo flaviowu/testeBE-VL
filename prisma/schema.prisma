@@ -44,11 +44,11 @@ model Seat {
   available       Boolean     @default(true)
 
 
-  flight          Flight      @relation(fields: [flightId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  flightId        Int
+  flight          Flight?      @relation(fields: [flightId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  flightId        Int?
 
-  passenger       Passenger   @relation(fields: [passengerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  passengerId     Int
+  passenger       Passenger?   @relation(fields: [passengerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  passengerId     Int?
 }
 
 model Passenger {
