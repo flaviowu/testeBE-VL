@@ -15,15 +15,30 @@ export class FlightService {
   };
 
   async create(dto: CreateFlightDto) {
-    const seats = async () => {
-      for (let i = 1; i == dto.availableSeats; i++) {
-        await this.prisma.seat.create({ number: i });
-      }
-      return;
+    const eta = new Date(dto.eta);
+    const etd = new Date(dto.etd);
+    delete dto.eta;
+    delete dto.etd;
+
+    const seatNumbers = Array.from(
+      { length: dto.availableSeats },
+      (x, i) => i + 1,
+    );
+
+    const data: Prisma.FlightCreateInput = {
+      ...dto,
+      eta,
+      etd,
+      seats: {
+        create: seatNumbers.map((seatNumber) => ({ seatNumber: seatNumber })),
+      },
     };
-    const data = { ...dto, seats };
-    const createdFlight = await this.prisma.flight.create({ ...data });
-    return 'This action adds a new flight';
+
+    const createdFlight = await this.prisma.flight.create({
+      data,
+    });
+
+    return createdFlight;
   }
 
   findAll() {
@@ -39,8 +54,13 @@ export class FlightService {
     });
   }
 
-  update(id: number, dto: UpdateFlightDto) {
-    return `This action updates a #${id} flight`;
+  async update(id: number, dto: UpdateFlightDto) {
+    const data = { ...dto };
+    const updatedFlight = await this.prisma.flight.update({
+      where: { id },
+      data,
+    });
+    return updatedFlight;
   }
 
   remove(id: number) {
