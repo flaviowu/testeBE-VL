@@ -28,8 +28,8 @@ model Flight {
   etd             DateTime    //estimated time of departure
   price           Float
 
-  airline         Airline    @relation(fields: [airlineId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  airlineId       Int
+  airline         Airline?    @relation(fields: [airlineId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  airlineId       Int?
   
   seats           Seat[]
   availableSeats  Int
@@ -40,7 +40,7 @@ model Flight {
 model Seat {
   id              Int         @id @default(autoincrement())
   createdAt       DateTime    @default(now())
-  number          Int
+  seatNumber      Int
   available       Boolean     @default(true)
 
 
