@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Param, ParseIntPipe, Patch } from '@nestjs/common';
 import { AirportcounterService } from './airportcounter.service';
 import { AddPassengerToFlightDto } from './dto/addPassengerToFlight.dto';
 import { RemovePassengerFromFlightDto } from './dto/removePassengerFromFlight.dto';
@@ -9,7 +9,7 @@ export class AirportcounterController {
 
   @Patch('addPassengerToFlight/:id')
   addPassengerToFlight(
-    @Param(':id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() addPassengerToFlightDto: AddPassengerToFlightDto,
   ) {
     return this.airportCounterService.addPassenger(id, addPassengerToFlightDto);
@@ -17,7 +17,7 @@ export class AirportcounterController {
 
   @Patch('removePassengerFromFlight/:id')
   removePassengerFromFlight(
-    @Param(':id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() removePassengerFromFlightDto: RemovePassengerFromFlightDto,
   ) {
     return this.airportCounterService.removePassenger(
