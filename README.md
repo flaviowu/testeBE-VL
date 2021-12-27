@@ -1,6 +1,6 @@
-##Teste Técnico Back-End Venture Labs
+Teste Técnico Back-End Venture Labs
 
-###Diretrizes
+Diretrizes
 Construir um sistema de compra de passagens aéreas. Esse sistema possui os seguintes requisitos:
 1. Suportar múltiplas companhias.
 2. Cada companhia possui múltiplos voos.
